@@ -49,6 +49,9 @@ function App() {
   };
 
   const onSubmit = (image) => {
+    console.log('====================================');
+    console.log(image);
+    console.log('====================================');
     setImageUrl(image);
     const { requestOptions, MODEL_ID } = getRequestOptions(imageUrl);
 
@@ -97,6 +100,7 @@ function App() {
       <Logo />
       <Rank />
       <ImageLinkForm onSubmitClicked={onSubmit} />
+      <p>paste image link to see image</p>
       <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
     </div>
   );
