@@ -9,14 +9,14 @@ import { useState } from "react";
 
 function App() {
   const [imageUrl, setImageUrl] = useState();
-  const [boxes, setBoxes] = useState();
+  const [boxes, setBoxes] = useState([]);
 
-  const getRequestOptions = (image) => {
+  const getRequestOptions = () => {
     const PAT = "db505e6e74e3459f8c55309e6cf75815";
     const USER_ID = "nngdmijw5yw5";
     const APP_ID = "face-detect";
     const MODEL_ID = "face-detection";
-    const IMAGE_URL = image;
+    const IMAGE_URL = imageUrl;
     const raw = JSON.stringify({
       user_app_id: {
         user_id: USER_ID,
@@ -49,37 +49,30 @@ function App() {
   };
 
   const onSubmit = (image) => {
-    console.log('====================================');
-    console.log(image);
-    console.log('====================================');
+    console.log('submit');
+    
     setImageUrl(image);
-    const { requestOptions, MODEL_ID } = getRequestOptions(imageUrl);
+    const { requestOptions, MODEL_ID } = getRequestOptions();
 
     fetch(
-      "https://api.clarifai.com/v2/models/" + MODEL_ID + "/outputs",
+      "https://cors-anywhere.herokuapp.com/https://api.clarifai.com/v2/models/" + MODEL_ID + "/outputs",
       requestOptions
     )
       .then((response) => response.json())
       .then((result) => {
         setBoxes([]);
         const regions = result.outputs[0].data.regions;
-        regions.forEach((region) => {
-          setBoxes([...boxes, calculateFacePosition(region)]);
-          console.log('====================================');
-          console.log(boxes);
-          console.log('====================================');
+        regions?.forEach((region) => {
+          setBoxes([...boxes, calculateFacePosition(region.region_info.bounding_box)]);
         });
       })
       .catch((error) => console.log("error", error));
   };
 
-  const calculateFacePosition = (region) => {
+  const calculateFacePosition = (boundingBox) => {
     const inputImage = document.getElementById("inputImage");
     const width = Number(inputImage.width);
     const height = Number(inputImage.height);
-    // Accessing and rounding the bounding box values
-    const boundingBox = region.region_info.bounding_box;
-
     const leftCol = boundingBox.left_col * width;
     const topRow = boundingBox.top_row * height;
     const rightCol = width - boundingBox.right_col * width;
@@ -100,8 +93,7 @@ function App() {
       <Logo />
       <Rank />
       <ImageLinkForm onSubmitClicked={onSubmit} />
-      <p>paste image link to see image</p>
-      <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
+      { imageUrl ? <FaceRecognition boxes={boxes} imageUrl={imageUrl} /> : <></>}
     </div>
   );
 }
