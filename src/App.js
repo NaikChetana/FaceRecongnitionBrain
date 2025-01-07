@@ -6,10 +6,13 @@ import { Navigation } from "./components/Navigation/Navigation";
 import { Rank } from "./components/Rank/Rank";
 import { FaceRecognition } from "./components/FaceRecognition/FaceRecognition";
 import { useState } from "react";
+import { Signin } from "./components/Signin/Signin";
 
 function App() {
   const [imageUrl, setImageUrl] = useState();
   const [boxes, setBoxes] = useState([]);
+  const [route, setRoute] = useState("signin");
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   const getRequestOptions = () => {
     const PAT = "db505e6e74e3459f8c55309e6cf75815";
@@ -86,14 +89,23 @@ function App() {
     };
   };
 
+  const onRouteChange = (newRoute)=>{
+    setIsSignedIn(newRoute === 'home');
+    setRoute(newRoute);
+  }
+
   return (
     <div className="App">
       <ParticlesBg type="cobweb" bg={true} color="#ffffff" />
-      <Navigation />
+      <Navigation onRouteChange={onRouteChange} isSignedIn={isSignedIn} />
+      { isSignedIn ? <>
       <Logo />
       <Rank />
       <ImageLinkForm onSubmitClicked={onSubmit} />
       { imageUrl ? <FaceRecognition boxes={boxes} imageUrl={imageUrl} /> : <></>}
+      </> :
+      <Signin currentRoute={route} onRouteChange={onRouteChange} />
+      }
     </div>
   );
 }
