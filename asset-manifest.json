@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/FaceRecongnitionBrain/static/css/main.4d76a5ea.css",
-    "main.js": "/FaceRecongnitionBrain/static/js/main.5e47e96e.js",
+    "main.js": "/FaceRecongnitionBrain/static/js/main.1b19baed.js",
     "static/js/488.1c16757b.chunk.js": "/FaceRecongnitionBrain/static/js/488.1c16757b.chunk.js",
     "static/media/brain.png": "/FaceRecongnitionBrain/static/media/brain.596fd1753e61dcd0b963.png",
     "index.html": "/FaceRecongnitionBrain/index.html",
     "main.4d76a5ea.css.map": "/FaceRecongnitionBrain/static/css/main.4d76a5ea.css.map",
-    "main.5e47e96e.js.map": "/FaceRecongnitionBrain/static/js/main.5e47e96e.js.map",
+    "main.1b19baed.js.map": "/FaceRecongnitionBrain/static/js/main.1b19baed.js.map",
     "488.1c16757b.chunk.js.map": "/FaceRecongnitionBrain/static/js/488.1c16757b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4d76a5ea.css",
-    "static/js/main.5e47e96e.js"
+    "static/js/main.1b19baed.js"
   ]
 }
